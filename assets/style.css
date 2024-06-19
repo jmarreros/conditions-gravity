@@ -1,0 +1,19 @@
+#suggestions{
+    background-color:white;
+    color:black;
+    padding: 10px;
+    position: absolute;
+    width: 40%;
+    min-width: 350px;
+    max-height: 90px;
+    overflow-y: auto;
+}
+
+#suggestions > div{
+    padding: 6px;
+    cursor: pointer;
+}
+
+#suggestions > div:hover{
+    background-color:#eee;
+}

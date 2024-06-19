@@ -15,8 +15,8 @@ class Submenu{
     public function register_submenu(){
         add_submenu_page(
             DCMS_CONDGRAVITY_SUBMENU,
-            __('Condiciones formulario','condgravity'),
-            __('Condiciones formulario','condgravity'),
+            __('Condiciones Formulario Gravity','condgravity'),
+            __('Condiciones Formulario Gravity','condgravity'),
             'manage_options',
             'condgravity',
             [$this, 'submenu_page_callback']
