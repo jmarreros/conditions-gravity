@@ -1,30 +1,77 @@
-const list = ['Abiu', 'Açaí', 'Acerola', 'Akebi', 'Ackee', 'African Cherry Orange', 'American Mayapple', 'Apple', 'Apricot'];
+for (let i = 1; i <= 4; i++) {
+    const group = 'grupo' + i;
+    const input = document.getElementsByClassName(group + ' razon-social')[0].getElementsByTagName('input')[0];
 
-const razonSocial = document.getElementsByClassName('grupo1 razon-social')[0];
-const inputRazonSocial = razonSocial.getElementsByTagName('input')[0];
-const suggestions = document.createElement('div');
-
-suggestions.setAttribute('id', 'suggestions');
-razonSocial.appendChild(suggestions);
-
-inputRazonSocial.setAttribute('autocomplete', 'off');
-
-for (let i = 0; i < list.length; i++) {
-    const suggestion = document.createElement('div');
-    suggestion.innerHTML = list[i];
-    suggestion.dataset.group = 'grupo' + i;
-
-    suggestion.addEventListener('click', function () {
-        inputRazonSocial.value = this.textContent;
-        suggestions.parentNode.removeChild(suggestions);
-        // console.log(this.dataset.group);
-
-        const values = get_values_all_groups();
-        console.log(values);
+    input.addEventListener('focus', function () {
+        if (this.value === '') {
+            const listValues = get_values_first_input(i);
+            create_suggestions(i, listValues);
+        }
     });
-    suggestions.appendChild(suggestion);
+
+    input.addEventListener('blur', function () {
+        setTimeout(() => {
+            remove_suggestions();
+        }, 200);
+    });
 }
 
+function get_values_first_input(excludeGroupNumber) {
+    const values = get_values_all_groups();
+    const firstValues = [];
+
+    for (let i = 1; i <= 4; i++) {
+        if (i !== excludeGroupNumber) {
+            if (values['grupo' + i][0] !== undefined && values['grupo' + i][0] !== '') {
+                firstValues['grupo' + i] = values['grupo' + i][0];
+            }
+        }
+    }
+    return firstValues;
+}
+
+function create_suggestions(groupNumber, listSuggestions) {
+    const mainGroup = 'grupo' + groupNumber;
+    const inputContainer = document.getElementsByClassName(mainGroup + ' razon-social')[0];
+    const input = inputContainer.getElementsByTagName('input')[0];
+    const suggestions = document.createElement('div');
+
+    suggestions.setAttribute('id', 'suggestions');
+    inputContainer.appendChild(suggestions);
+
+    input.setAttribute('autocomplete', 'off');
+
+    for (const [key, value] of Object.entries(listSuggestions)) {
+        const suggestion = document.createElement('div');
+        suggestion.innerHTML = value;
+        suggestion.dataset.group = key;
+
+        suggestion.addEventListener('click', function () {
+            // input.value = this.textContent;
+            const group = this.dataset.group;
+
+            const values = get_values_group(this.dataset.group);
+
+            for (let i = 0; i < values.length; i++) {
+                const elementDestination = document.getElementsByClassName(mainGroup)[i].getElementsByTagName('input');
+
+                if (elementDestination.length > 0) { // Exclude select html field form (ciudades)
+                    elementDestination[0].value = values[i];
+                }
+            }
+
+            remove_suggestions();
+        });
+        suggestions.appendChild(suggestion);
+    }
+}
+
+function remove_suggestions() {
+    const suggestions = document.getElementById('suggestions');
+    if (suggestions) {
+        suggestions.parentNode.removeChild(suggestions);
+    }
+}
 
 // Get all input values from all groups
 function get_values_all_groups() {
@@ -41,9 +88,9 @@ function get_values_all_groups() {
 // Get all input values from a group
 function get_values_group(group) {
     const elements = document.getElementsByClassName(group);
-    const razonSocial = elements[0].getElementsByTagName('input')[0];
+    const mainInput = elements[0].getElementsByTagName('input')[0];
 
-    if (razonSocial.value === '') {
+    if (mainInput.value === '') {
         return [];
     }
 
@@ -53,52 +100,10 @@ function get_values_group(group) {
         const element = elements[i].getElementsByTagName('input');
         if (element.length > 0) {
             values.push(element[0].value);
+        } else {
+            values.push(''); // select html field (ciudades)
         }
     }
 
     return values;
 }
-
-
-//
-// function autocomplete(input, list) {
-//     //Add an event listener to compare the input value with all countries
-//     input.addEventListener('input', function () {
-//         //Close the existing list if it is open
-//         closeList();
-//
-//         //If the input is empty, exit the function
-//         if (!this.value)
-//             return;
-//
-//         //Create a suggestions <div> and add it to the element containing the input field
-//         suggestions = document.createElement('div');
-//         suggestions.setAttribute('id', 'suggestions');
-//         this.parentNode.appendChild(suggestions);
-//
-//         //Iterate through all entries in the list and find matches
-//         for (let i=0; i<list.length; i++) {
-//             if (list[i].toUpperCase().includes(this.value.toUpperCase())) {
-//                 //If a match is found, create a suggestion <div> and add it to the suggestions <div>
-//                 suggestion = document.createElement('div');
-//                 suggestion.innerHTML = list[i];
-//
-//                 suggestion.addEventListener('click', function () {
-//                     input.value = this.innerHTML;
-//                     closeList();
-//                 });
-//                 suggestion.style.cursor = 'pointer';
-//
-//                 suggestions.appendChild(suggestion);
-//             }
-//         }
-//
-//     });
-//
-//     function closeList() {
-//         let suggestions = document.getElementById('suggestions');
-//         if (suggestions)
-//             suggestions.parentNode.removeChild(suggestions);
-//     }
-// }
-
