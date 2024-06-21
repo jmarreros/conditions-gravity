@@ -14,7 +14,8 @@
     cursor: pointer;
 }
 
-#suggestions > div:hover{
+#suggestions > div:hover,
+#suggestions > div.active{
     color:white;
     background-color:#204ce5;
 }

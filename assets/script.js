@@ -3,7 +3,8 @@ for (let i = 1; i <= 4; i++) {
     const input = document.getElementsByClassName(group + ' razon-social')[0].getElementsByTagName('input')[0];
 
     input.addEventListener('focus', function () {
-        if (this.value === '') {
+        const suggestions = document.getElementById('suggestions');
+        if (this.value === '' && !suggestions) {
             const listValues = get_values_first_input(i);
             create_suggestions(i, listValues);
         }
@@ -14,7 +15,72 @@ for (let i = 1; i <= 4; i++) {
             remove_suggestions();
         }, 200);
     });
+
+    input.addEventListener("keyup", function (event) {
+        const suggestions = document.getElementById('suggestions');
+        if (event.target.value === ''  && !suggestions) {
+            const listValues = get_values_first_input(i);
+            create_suggestions(i, listValues);
+        } else if (event.target.value !== ''){
+            remove_suggestions();
+        }
+    });
 }
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === 'ArrowDown') {
+        const suggestions = document.getElementById('suggestions');
+        if (suggestions) {
+            const activeSuggestion = suggestions.getElementsByClassName('active')[0];
+            if ( ! activeSuggestion ) {
+                const firstSuggestion = suggestions.getElementsByTagName('div')[0];
+                firstSuggestion.classList.add('active');
+            } else {
+                const nextSuggestion = activeSuggestion.nextElementSibling;
+                if (nextSuggestion) {
+                    activeSuggestion.classList.remove('active');
+                    nextSuggestion.classList.add('active');
+                }
+            }
+        }
+    }
+    if (event.key === 'ArrowUp') {
+        const suggestions = document.getElementById('suggestions');
+        if (suggestions) {
+            const activeSuggestion = suggestions.getElementsByClassName('active')[0];
+            if (activeSuggestion) {
+                const previousSuggestion = activeSuggestion.previousElementSibling;
+                if (previousSuggestion) {
+                    activeSuggestion.classList.remove('active');
+                    previousSuggestion.classList.add('active');
+                }
+            }
+        }
+    }
+});
+
+
+// disable dafault keypress enter form
+const form = document.getElementsByClassName('gform_wrapper')[0].getElementsByTagName('form')[0];
+form.addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+    }
+});
+
+// Enter key to select active suggestion
+document.addEventListener("keypress", function (event) {
+    if (event.key === 'Enter') {
+        const suggestions = document.getElementById('suggestions');
+        if (suggestions) {
+            const activeSuggestion = suggestions.getElementsByClassName('active')[0];
+            if (activeSuggestion) {
+                activeSuggestion.click();
+            }
+        }
+    }
+});
+
 
 function get_values_first_input(excludeGroupNumber) {
     const values = get_values_all_groups();
