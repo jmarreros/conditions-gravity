@@ -1,6 +1,6 @@
 // Mask LER field
-const ler_field_id = 'input_4_47';
-const ler_field = document.getElementById(ler_field_id);
+const ler_field_class = 'codigo-ler';
+const ler_field = document.getElementsByClassName(ler_field_class)[0]?.getElementsByTagName('input')[0];
 
 // Validate field id to accept only numbers, -, and *
 if (ler_field) {
