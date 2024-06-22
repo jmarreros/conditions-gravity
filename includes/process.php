@@ -5,6 +5,7 @@ namespace dcms\condgravity\includes;
 class Process {
 
 	public function __construct() {
+		// Condición para campos de CNAE
 		add_filter( 'gform_validation', [ $this, 'custom_validation_cenae_1' ] );
 		add_filter( 'gform_validation', [ $this, 'custom_validation_cenae_2' ] );
 	}
