@@ -11,8 +11,10 @@ class Enqueue {
 	public function register_scripts(): void {
 		wp_register_style( 'cond-gravity-style', DCMS_CONDGRAVITY_URL . 'assets/style.css', [], DCMS_CONDGRAVITY_VERSION );
 		wp_register_script( 'cond-suggestion-gravity-script', DCMS_CONDGRAVITY_URL . 'assets/suggestion.js', [], DCMS_CONDGRAVITY_VERSION, true );
+		wp_register_script( 'cond-conditions-gravity-script', DCMS_CONDGRAVITY_URL . 'assets/conditions.js', [], DCMS_CONDGRAVITY_VERSION, true );
 
 		wp_enqueue_style( 'cond-gravity-style' );
 		wp_enqueue_script( 'cond-suggestion-gravity-script' );
+		wp_enqueue_script( 'cond-conditions-gravity-script' );
 	}
 }

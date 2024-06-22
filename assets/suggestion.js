@@ -1,4 +1,6 @@
-// disable dafault keypress enter form
+// Suggestions dropdown for razon social fields
+
+// disable default keypress enter form
 const form = document.getElementsByClassName('gform_wrapper')[0].getElementsByTagName('form')[0];
 form.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
