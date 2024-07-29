@@ -3,7 +3,7 @@
 Plugin Name: Conditions Gravity
 Plugin URI: https://decodecms.com
 Description: Plugin que agrega condiciones varias al formulario de Gravity Forms
-Version: 1.0
+Version: 1.2.1
 Author: Webservi
 Author URI: https://webservi.es
 Text Domain: condgravity
@@ -29,7 +29,7 @@ final class Loader{
 
 	// Define all the constants we need
 	public function define_constants():void{
-		define ('DCMS_CONDGRAVITY_VERSION', '1.0');
+		define ('DCMS_CONDGRAVITY_VERSION', '1.2.1');
 		define ('DCMS_CONDGRAVITY_PATH', plugin_dir_path( __FILE__ ));
 		define ('DCMS_CONDGRAVITY_URL', plugin_dir_url( __FILE__ ));
 		define ('DCMS_CONDGRAVITY_BASE_NAME', plugin_basename( __FILE__ ));
