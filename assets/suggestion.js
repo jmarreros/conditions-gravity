@@ -1,4 +1,4 @@
-// Suggestions dropdown for razon social fields
+// Suggestions dropdown for razón social fields
 
 // disable default keypress enter form
 const form = document.getElementsByClassName('gform_wrapper')[0].getElementsByTagName('form')[0];

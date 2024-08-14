@@ -1,4 +1,4 @@
-// Mask NIF CIF field
+// Validate NIF CIF field
 
 const nif_field_class = 'nif';
 const nif_fields = document.getElementsByClassName(nif_field_class);
